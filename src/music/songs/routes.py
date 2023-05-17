@@ -2,48 +2,65 @@ from flask import Blueprint, request, jsonify
 from firebase import firebase_bucket
 from Helpers.handlers import error_handler
 from .models import Song
+from music.projects.models import Project
 from Server.database import db
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 song = Blueprint("songs", __name__)
 
 
-@song.route("/music", methods=["GET"])
+@song.route("/", methods=["GET"])
 def get_music():
     songs = Song.query.all()
     return jsonify([song.serialize() for song in songs]), 200
 
 
-@song.route("/music", methods=["POST"])
+@song.route("/<int:project_id>", methods=["POST"])
 @jwt_required()
-def post_music():
-    identity = get_jwt_identity()
-    print(identity)
+def post_music(project_id):
     form = request.form
     files = request.files
     if not form:
         return error_handler("No form data", 400)
-    title = form.get("title")
-    artist = form.get("artist")
+    name = form.get("name")
+    if not name:
+        return error_handler("Missing name", 400)
     song = files.get("song")
-    if not title or not artist or not song:
-        return error_handler("Missing data", 400)
+    image = files.get("image")
+    if not song or not image:
+        return error_handler("Song and cover image are required", 400)
+    # check if file is audio
+    print(song.filename.endswith(".mp3"))
+    if not song.filename.endswith(".mp3") and not song.filename.endswith(".wav"):
+        return error_handler("File is not audio", 400)
 
+    project = Project.query.get(project_id)
+    if not project:
+        return error_handler("Project not found", 404)
+    if not name:
+        return error_handler("Missing name", 400)
+    version = len(project.songs) + 1
+    name = name + f"-{version}"
     # Upload song to firebase storage
-    upload_url = firebase_bucket.upload_file(song, song.filename or title)
-    if not upload_url:
-        return error_handler("Error uploading song", 500)
-
-    # Create Song Psql object
-    song = Song(title=title, artist=artist, url=upload_url, user_id=identity.get("id"))
-
-    # Save song to firestore
     try:
-        db.session.add(song)
+        song_url = firebase_bucket.upload_file(song, name)
+        image_url = firebase_bucket.upload_file(image, name + "-cover")
+        if not song_url:
+            return error_handler("Error uploading song", 500)
+        new_song = Song(
+            name=name,
+            version=version,
+            project_id=project_id,
+            song_url=song_url,
+            img_url=image_url,
+            user_id=get_jwt_identity().get("id"),
+        )
+        db.session.add(new_song)
         db.session.commit()
-        return jsonify({"message": "Music added"}), 201
+        return jsonify(new_song.serialize()), 201
     except Exception as e:
-        return jsonify(error_handler(e, 500))
+        db.session.rollback()
+        return error_handler(str(e), 500)
 
 
 @song.route("/music/<id>", methods=["DELETE"])

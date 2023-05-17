@@ -10,6 +10,8 @@ class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     version = db.Column(db.Integer, nullable=False)
+    song_url = db.Column(db.String(150), nullable=False)
+    img_url = db.Column(db.String(150), nullable=True)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -30,6 +32,8 @@ class Song(db.Model):
             "id": self.id,
             "name": self.name,
             "version": self.version,
+            "song_url": self.song_url,
+            "img_url": self.img_url,
             "project_id": self.project_id,
             "user_id": self.user_id,
             "comments": [comment.serialize() for comment in self.comments],

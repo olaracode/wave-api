@@ -1,4 +1,7 @@
-from flask import Blueprint
+from Users.routes import user
+from music.songs.routes import song
+from music.projects.routes import project
+from music.collaborators.routes import collaborator
 
 
 def register_blueprint_with_prefix(app, blueprint, prefix):
@@ -9,9 +12,8 @@ def register_blueprint_with_prefix(app, blueprint, prefix):
     app.register_blueprint(blueprint, url_prefix=url_prefix)
 
 
-def register_blueprints(app, register, prefix=None):
-    """
-    Registers all blueprints with the app.
-    """
-    for blueprint in register:
-        register_blueprint_with_prefix(app, blueprint, prefix)
+def api_routes_v1(app, prefix=None):
+    register_blueprint_with_prefix(app, user, prefix + "/user")
+    register_blueprint_with_prefix(app, song, prefix + "/song")
+    register_blueprint_with_prefix(app, project, prefix + "/project")
+    register_blueprint_with_prefix(app, collaborator, prefix + "/collaborator")

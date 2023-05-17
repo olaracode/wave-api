@@ -2,8 +2,7 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 from .database import db, migrate
 from .admin import create_admin
-from .routes import register_blueprints
-from .routes.v1 import api_routes_v1
+from .routes import api_routes_v1
 
 
 def create_app():
@@ -12,7 +11,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     jwt = JWTManager(app)
-    register_blueprints(app, api_routes_v1, prefix="api/v1")
+    api_routes_v1(app, prefix="/api/v1")
     create_admin(app)
 
     @app.route("/")

@@ -1,12 +1,12 @@
 from Server.database import db
 
 
-class Collaborators(db.Models):
+class Collaborator(db.Model):
+    __tablename__ = "collaborator"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"), nullable=False)
-    user = db.relationship("User", backref="collaborators", lazy=True)
-    project = db.relationship("Project", backref="collaborators", lazy=True)
+    user = db.relationship("User", backref="collaborator", lazy=True)
 
     def __repr__(self):
         return f"Collaborators('{self.user_id}', '{self.project_id}')"
@@ -15,4 +15,8 @@ class Collaborators(db.Models):
         return f"{self.user_id} {self.project_id}"
 
     def serialize(self):
-        pass
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "project_id": self.project_id,
+        }

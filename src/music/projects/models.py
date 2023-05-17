@@ -10,10 +10,8 @@ class Project(db.Model):
     name = db.Column(db.String(100), nullable=False)
     songs = db.relationship("Song", backref="project", lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    collaborators = db.relationship(
-        "User", secondary="collaborators", backref="projects", lazy=True
-    )
-    version = db.Column(db.Integer, nullable=False, default=1)
+    collaborators = db.relationship("Collaborator", backref="project", lazy=True)
+    version = db.Column(db.Integer, unique=True, nullable=False, default=1)
 
     def __repr__(self):
         return f"Project('{self.name}', '{self.version}')"

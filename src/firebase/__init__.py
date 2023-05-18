@@ -1,15 +1,14 @@
 from firebase_admin import credentials, initialize_app, storage
 import os
-from .firebase_settings import FIREBASE_CONFIG, FIREBASE_STORAGE_BUCKET
 
 # Create a credential instance
-cred = credentials.Certificate(FIREBASE_CONFIG)
+cred = credentials.Certificate(os.environ.get("FIREBASE_CREDENTIALS"))
 
 # Initialize the app with a service account, granting admin privileges
 default_app = initialize_app(
     cred,
     {
-        "storageBucket": FIREBASE_STORAGE_BUCKET,
+        "storageBucket": os.environ.get("FIREBASE_STORAGE_BUCKET"),
     },
 )
 

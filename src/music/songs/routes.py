@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from firebase import firebase_bucket
 from Helpers.handlers import error_handler
 from .models import Song
-from music.projects.models import Project
+from Music.projects.models import Project
 from Server.database import db
 from flask_jwt_extended import jwt_required, get_jwt_identity
 

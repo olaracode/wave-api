@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from Server.database import db
 from Helpers.handlers import error_handler, serialize_array
 from .models import Collaborator
-from music.projects.models import Project
+from Music.projects.models import Project
 from Users.models import User
 
 collaborator = Blueprint("collaborators", __name__)

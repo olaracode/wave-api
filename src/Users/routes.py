@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from Server.database import db
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, create_refresh_token
 from Helpers.handlers import error_handler
 from .encrypt import generate_salt, generate_password, check_password
 from .helpers import email_validator
@@ -30,9 +30,22 @@ def register_user():
 
     new_user = User(name=name, email=email, password=hashed_password, salt=salt)
     db.session.add(new_user)
+
     try:
         db.session.commit()
-        return jsonify({"user": new_user.serialize()}), 201
+        user_object = {"id": new_user.id, "role": new_user.role.value}
+        token = create_access_token(user_object)
+        refresh_token = create_refresh_token(user_object)
+        return (
+            jsonify(
+                {
+                    "user": new_user.serialize(),
+                    "token": token,
+                    "refresh_token": refresh_token,
+                }
+            ),
+            201,
+        )
 
     except Exception as error:
         db.session.rollback()
@@ -53,7 +66,8 @@ def login_user():
 
     if not check_password(user_exists.password, password, user_exists.salt):
         return error_handler("Password did not match", 401)
+    user_object = {"id": user_exists.id, "role": user_exists.role.value}
+    token = create_access_token(user_object)
+    refresh_token = create_refresh_token(user_object)
 
-    token = create_access_token({"id": user_exists.id, "role": user_exists.role.value})
-
-    return jsonify({"token": token}), 200
+    return jsonify({"token": token, "refresh_token": refresh_token}), 200

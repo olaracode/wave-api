@@ -1,18 +1,23 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from .database import db, migrate
-from .admin import create_admin
 from .routes import api_routes_v1
+from Admin.admin import admin
+from flask_cors import CORS
+import os
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_pyfile("settings.py")
+    app.secret_key = os.environ.get("JWT_SECRET_KEY")
+    CORS(app)
+
     db.init_app(app)
     migrate.init_app(app, db)
     jwt = JWTManager(app)
+    app.register_blueprint(admin, url_prefix="/admin")
     api_routes_v1(app, prefix="/api/v1")
-    create_admin(app)
 
     @app.route("/")
     def hello():

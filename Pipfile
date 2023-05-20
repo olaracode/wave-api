@@ -19,6 +19,7 @@ flask-swagger-ui = "*"
 flask-swagger = "*"
 flasgger = "*"
 flask-admin = "*"
+flask-cors = "*"
 
 [dev-packages]
 black = "*"

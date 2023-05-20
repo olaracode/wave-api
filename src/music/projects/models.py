@@ -11,7 +11,9 @@ class Project(db.Model):
     songs = db.relationship("Song", backref="project", lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     collaborators = db.relationship("Collaborator", backref="project", lazy=True)
-    version = db.Column(db.Integer, unique=True, nullable=False, default=1)
+    version = db.Column(db.Integer, nullable=False, default=1)
+    # there can only be one project with the same name and version for each user
+    db.UniqueConstraint("name", "version", "user_id")
 
     def __repr__(self):
         return f"Project('{self.name}', '{self.version}')"

@@ -1,5 +1,5 @@
 from Server.database import db
-from music.projects.models import Project
+from Music.projects.models import Project
 
 # a song is a version of a project. It must be related to a project and a user who created it, it can have comments and it must have a name and a version, the version most be unique for a project.
 

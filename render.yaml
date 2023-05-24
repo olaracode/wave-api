@@ -17,7 +17,7 @@ services:
         value: src/Server/app.py
       - key: FIREBASE_CREDENTIALS
         value: /etc/firebase.json # This file most be added to the secret files of render
-      - key: FIREBASE_STORAGE-BUCKET: 
+      - key: FIREBASE_STORAGE-BUCKET
         value: spotify-20df8.appspot.com # varies from proyect to proyect
       - key: FLASK_DEBUG
         value: 0

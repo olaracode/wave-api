@@ -24,6 +24,7 @@ def get_colaborations():
     return jsonify(serialize_array(projects)), 200
 
 
+# Create a new project
 @project.route("/", methods=["POST"])
 @jwt_required()
 def create_project():

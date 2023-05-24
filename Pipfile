@@ -20,6 +20,7 @@ flask-swagger = "*"
 flasgger = "*"
 flask-admin = "*"
 flask-cors = "*"
+gunicorn = "*"
 
 [dev-packages]
 black = "*"

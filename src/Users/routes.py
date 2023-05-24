@@ -1,6 +1,11 @@
 from flask import Blueprint, request, jsonify
 from Server.database import db
-from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_jwt_extended import (
+    create_access_token,
+    create_refresh_token,
+    get_jwt_identity,
+    jwt_required,
+)
 from Helpers.handlers import error_handler
 from .encrypt import generate_salt, generate_password, check_password
 from .helpers import email_validator
@@ -67,6 +72,20 @@ def login_user():
     if not check_password(user_exists.password, password, user_exists.salt):
         return error_handler("Password did not match", 401)
     user_object = {"id": user_exists.id, "role": user_exists.role.value}
+    token = create_access_token(user_object)
+    refresh_token = create_refresh_token(user_object)
+
+    return jsonify({"token": token, "refresh_token": refresh_token}), 200
+
+
+## token refresher
+
+
+@user.route("/refresh", methods=["POST"])
+@jwt_required(refresh=True)
+def refresh_token():
+    user = get_jwt_identity()
+    user_object = {"id": user.id, "role": user.role.value}
     token = create_access_token(user_object)
     refresh_token = create_refresh_token(user_object)
 

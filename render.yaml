@@ -5,7 +5,7 @@ services:
     name: flask-rest-hello
     env: python # valid values: https://render.com/docs/yaml-spec#environment
     buildCommand: "./render_build.sh"
-    startCommand: "gunicorn run --chdir ./src/"
+    startCommand: "gunicorn run --chdir ./"
     plan: free # optional; defaults to starter
     numInstances: 1
     envVars:
@@ -16,7 +16,7 @@ services:
       - key: FLASK_APP
         value: src/Server/app.py
       - key: FIREBASE_CREDENTIALS
-        value: /etc/firebase.json # This file most be added to the secret files of render
+        value: /etc/secrets/firebase.json # This file most be added to the secret files of render
       - key: FIREBASE_STORAGE-BUCKET
         value: spotify-20df8.appspot.com # varies from proyect to proyect
       - key: FLASK_DEBUG

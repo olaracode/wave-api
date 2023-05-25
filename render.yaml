@@ -20,7 +20,8 @@ services:
       - key: FIREBASE_STORAGE-BUCKET
         value: spotify-20df8.appspot.com # varies from proyect to proyect
       - key: FLASK_DEBUG
-        value: 0
+      - key: PYTHON_VERSION
+        value: 3.9.2
       - key: DATABASE_URL # Render PostgreSQL database
         fromDatabase:
           name: flask-rest-42170

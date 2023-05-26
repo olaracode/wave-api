@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from .models import Project
-from Server.database import db
-from Helpers.handlers import error_handler, serialize_array
+from src.Server.database import db
+from src.Helpers.handlers import error_handler, serialize_array
 
 project = Blueprint("projects", __name__)
 

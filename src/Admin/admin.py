@@ -5,10 +5,10 @@ from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
 )
-from Users.encrypt import generate_password, check_password, generate_salt
-from Users.models import User, roles
-from Server.database import db
-from Helpers.handlers import error_handler, serialize_array
+from src.Users.encrypt import generate_password, check_password, generate_salt
+from src.Users.models import User, roles
+from src.Server.database import db
+from src.Helpers.handlers import error_handler, serialize_array
 from .middleware import admin_required
 from .utils import get_or_delete, paginate_model
 

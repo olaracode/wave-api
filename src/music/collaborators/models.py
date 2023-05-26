@@ -1,4 +1,4 @@
-from Server.database import db
+from src.Server.database import db
 
 
 class Collaborator(db.Model):

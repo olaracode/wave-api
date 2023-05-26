@@ -1,12 +1,12 @@
 from flask import Blueprint, request, jsonify
-from Server.database import db
+from src.Server.database import db
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
     get_jwt_identity,
     jwt_required,
 )
-from Helpers.handlers import error_handler
+from src.Helpers.handlers import error_handler
 from .encrypt import generate_salt, generate_password, check_password
 from .helpers import email_validator
 from .models import User

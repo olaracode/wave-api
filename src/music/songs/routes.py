@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
-from firebase import firebase_bucket
-from Helpers.handlers import error_handler
-from .models import Song
-from Music.projects.models import Project
-from Server.database import db
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from src.firebase import firebase_bucket
+from src.Helpers.handlers import error_handler
+from .models import Song
+from src.Music.projects.models import Project
+from src.Server.database import db
 
 song = Blueprint("songs", __name__)
 

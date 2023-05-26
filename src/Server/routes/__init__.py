@@ -1,7 +1,7 @@
-from Users.routes import user
-from Music.songs.routes import song
-from Music.projects.routes import project
-from Music.collaborators.routes import collaborator
+from src.Users.routes import user
+from src.Music.songs.routes import song
+from src.Music.projects.routes import project
+from src.Music.collaborators.routes import collaborator
 
 
 def register_blueprint_with_prefix(app, blueprint, prefix):

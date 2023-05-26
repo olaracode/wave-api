@@ -1,4 +1,4 @@
-from Server.database import db
+from src.Server.database import db
 
 # A project is a collection of songs that are each a new version of the same song. Is must be related to songs and users, it can have collaborators and it must have a name.
 

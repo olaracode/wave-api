@@ -1,10 +1,10 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from Server.database import db
-from Helpers.handlers import error_handler, serialize_array
+from src.Server.database import db
+from src.Helpers.handlers import error_handler, serialize_array
 from .models import Collaborator
-from Music.projects.models import Project
-from Users.models import User
+from src.Music.projects.models import Project
+from src.Users.models import User
 
 collaborator = Blueprint("collaborators", __name__)
 

@@ -1,4 +1,4 @@
-from Server.database import db
+from src.Server.database import db
 from datetime import datetime
 
 # A comment most belong to a song and a user, it must have content and creation date

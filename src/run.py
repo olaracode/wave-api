@@ -1,5 +1,5 @@
-from Server.app import create_app, db
-from Server.app import create_app
+from src.Server.app import create_app, db
+from src.Server.app import create_app
 
 app = create_app()
 

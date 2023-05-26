@@ -2,7 +2,7 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 from .database import db, migrate
 from .routes import api_routes_v1
-from Admin.admin import admin
+from src.Admin.admin import admin
 from flask_cors import CORS
 import os
 

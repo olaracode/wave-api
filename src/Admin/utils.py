@@ -1,6 +1,6 @@
 from flask import request, jsonify
-from Helpers.handlers import error_handler, serialize_array
-from Server.database import db
+from src.Helpers.handlers import error_handler, serialize_array
+from src.Server.database import db
 
 
 def get_or_delete(id, model, model_name):

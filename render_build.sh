@@ -1,4 +1,4 @@
-pip install -r requirements.txt
-flask db init
-flask db migrate
-flask db upgrade
+pipenv install
+pipenv run flask db init
+pipenv run flask db migrate
+pipenv run flask db upgrade

@@ -1,7 +1,7 @@
 import enum
 from src.Server.database import db
 from src.Helpers.handlers import error_handler, serialize_array
-from src.Music.comments.models import Comment
+
 
 
 class roles(enum.Enum):

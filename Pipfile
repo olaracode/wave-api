@@ -29,7 +29,7 @@ black = "*"
 python_version = "3.9"
 
 [scripts]
-start = "gunicorn src.run:app"
+start = "gunicorn src.wsgi:app"
 test = "python -m pytest"
 firebase = "python src/firebase/firebase_scripts.py"
 init = "flask db init"
